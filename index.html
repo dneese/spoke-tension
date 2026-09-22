@@ -11,77 +11,140 @@
 </head>
 <body>
     <header class="header">
-        <h1 class="title">SpokeTension <span class="ver">v1.0</span></h1>
-        <div class="badge">ParkTool TM-1 · ZTTO TC-02</div>
+        <h1 class="title">SpokeTension <span class="ver">v1.1</span></h1>
+        <div class="header-right">
+            <button id="btnLang" class="btn ghost" type="button">EN</button>
+            <span class="badge">ParkTool TM-1 · ZTTO TC-02</span>
+        </div>
     </header>
 
     <main class="layout">
         <section class="panel">
+            <details class="guide" open>
+                <summary data-i18n="guideTitle">Інструкція: що робити і що вводити</summary>
+                <p class="hint" data-i18n="guideIntro">Крок за кроком — як користуватися калькулятором.</p>
+                <ol class="guide-list">
+                    <li data-i18n="guideStep1">Виберіть тензометр. ParkTool TM-1: показ — у поділках шкали (крок 0.5). ZTTO TC-02: показ — у міліметрах прогину (крок 0.1).</li>
+                    <li data-i18n="guideStep2">Виберіть таблицю спиці, що відповідає вашим спицям (товщина/профіль, напр. 2.0 мм). Вона визначає перерахунок «показ → кгс».</li>
+                    <li data-i18n="guideStep3">Вкажіть загальну кількість спиць колеса: 24 / 28 / 32 / 36.</li>
+                    <li data-i18n="guideStep4">Задайте допуск розкиду (5–20%) — це межі «в нормі» відносно середнього по стороні; позначається крапкою біля кожної спиці.</li>
+                    <li data-i18n="guideStep5">Впишіть цільовий натяг для лівої та правої сторони (кгс) — зі специфікації обода (типово 100–120 кгс для алюмінієвих) або свій орієнтир. На радарі цілі — пунктиром.</li>
+                    <li data-i18n="guideStep6">Міряйте тензометром кожну спицю та вводьте показ — радар і статистика оновлюються миттєво. Крапка: зелена — в межах допуску, жовта — близько до межі, червона — поза.</li>
+                    <li data-i18n="guideStep7">Слідкуйте за картками статистики: середній натяг, стандартне відхилення (σ), нижня/верхня межа з відповідними показами тензометра, розкид ±% і відхилення від цілі.</li>
+                    <li data-i18n="guideStep8">Після балансування заповніть блок «Збірка» (ім'я, обід, втулок, нотатки) і натисніть «Друк аркуша» для документації. Дані зберігаються автоматично; для перенесення користуйтесь експортом/імпортом JSON.</li>
+                </ol>
+                <p class="hint" data-i18n="guideTip1">Покази дійсні лише для вибраної шкали — зміна тензометра або таблиці очищає введені значення.</p>
+                <p class="hint" data-i18n="guideTip2">На задньому колесі з касетою праві спиці (фланець ближче до центру) натягуються вище за ліві — це нормальна асиметрія «дишу».</p>
+                <p class="hint" data-i18n="guideDisclaimer">Результати — орієнтир для збалансування; остаточний натяг визначається під час центрування колеса.</p>
+            </details>
+
             <div class="panel-head">
-                <h2>Конфігурація колеса</h2>
-                <p class="hint">Виберіть тензометр, таблицю спиці та кількість спиць.</p>
+                <h2 data-i18n="cfgTitle">Конфігурація колеса</h2>
+                <p class="hint" data-i18n="cfgHint">Виберіть тензометр, таблицю спиці та кількість спиць.</p>
             </div>
 
             <div class="field">
-                <label for="tensio">Тензометр</label>
+                <label for="tensio" data-i18n="tensioLabel">Тензометр</label>
                 <select id="tensio"></select>
             </div>
             <div class="field">
-                <label for="spokeType">Тип спиці (таблиця калібрування)</label>
+                <label for="spokeType" data-i18n="spokeTypeLabel">Тип спиці (таблиця калібрування)</label>
                 <select id="spokeType"></select>
             </div>
             <div class="field">
-                <label for="spokeCount">Кількість спиць (усього)</label>
+                <label for="spokeCount" data-i18n="countLabel">Кількість спиць (усього)</label>
                 <select id="spokeCount">
-                    <option value="24">24 (12 ліва / 12 права)</option>
-                    <option value="28">28 (14 ліва / 14 права)</option>
-                    <option value="32" selected>32 (16 ліва / 16 права)</option>
-                    <option value="36">36 (18 ліва / 18 права)</option>
+                    <option value="24" data-i18n="count24">24 (12 ліва / 12 права)</option>
+                    <option value="28" data-i18n="count28">28 (14 ліва / 14 права)</option>
+                    <option value="32" selected data-i18n="count32">32 (16 ліва / 16 права)</option>
+                    <option value="36" data-i18n="count36">36 (18 ліва / 18 права)</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="varLimit" data-i18n="varLabel">Допуск розкиду</label>
+                <select id="varLimit">
+                    <option value="5">±5%</option>
+                    <option value="10">±10%</option>
+                    <option value="15">±15%</option>
+                    <option value="20" selected>±20%</option>
                 </select>
             </div>
 
             <div class="grid-targets">
                 <div class="field">
-                    <label for="targetL">Цільовий натяг, ліва (кгс)</label>
+                    <label for="targetL" data-i18n="targetLLabel">Цільовий натяг, ліва (кгс)</label>
                     <input type="number" id="targetL" value="90" min="0" step="5">
                 </div>
                 <div class="field">
-                    <label for="targetR">Цільовий натяг, права (кгс)</label>
+                    <label for="targetR" data-i18n="targetRLabel">Цільовий натяг, права (кгс)</label>
                     <input type="number" id="targetR" value="110" min="0" step="5">
                 </div>
             </div>
 
             <div class="panel-head">
-                <h2>Покази тензометра</h2>
-                <p class="hint">Одиниці показів: <span id="unitHintText">поділки шкали</span>. Вводьте показ для кожної спиці обох сторін колеса.</p>
+                <h2 data-i18n="readingsTitle">Покази тензометра</h2>
+                <p class="hint"><span data-i18n="unitIntro">Одиниці показів:</span> <span id="unitHintText"></span>. <span data-i18n="unitBody">Вводьте показ для кожної спиці обох сторін колеса.</span></p>
+                <p class="hint" data-i18n="readingsChangeHint">Зміна тензометра чи таблиці спиці очищає введені покази — вони дійсні лише для вибраної шкали.</p>
             </div>
 
             <div class="inputs-scroll">
                 <div class="inputs-grid">
                     <div>
-                        <h3 class="col-head cyan">Ліва сторона</h3>
+                        <h3 class="col-head cyan" data-i18n="colLeft">Ліва сторона</h3>
                         <div id="leftSpokesInputs" class="spoke-list"></div>
                     </div>
                     <div>
-                        <h3 class="col-head emerald">Права сторона</h3>
+                        <h3 class="col-head emerald" data-i18n="colRight">Права сторона</h3>
                         <div id="rightSpokesInputs" class="spoke-list"></div>
                     </div>
                 </div>
             </div>
 
             <div class="toolbar">
-                <button id="btnReset" class="btn ghost">Скинути</button>
-                <button id="btnExport" class="btn">Експорт JSON</button>
-                <button id="btnImport" class="btn">Імпорт JSON</button>
+                <button id="btnReset" class="btn ghost" data-i18n="btnReset">Скинути</button>
+                <button id="btnExport" class="btn" data-i18n="btnExport">Експорт JSON</button>
+                <button id="btnImport" class="btn" data-i18n="btnImport">Імпорт JSON</button>
                 <input type="file" id="importFile" accept="application/json" hidden>
+            </div>
+
+            <div class="panel-head meta-head">
+                <h2 data-i18n="metaTitle">Збірка</h2>
+            </div>
+            <div class="meta-grid">
+                <div class="field">
+                    <label for="metaName" data-i18n="metaName">Ім'я збірки</label>
+                    <input type="text" id="metaName" placeholder="—">
+                </div>
+                <div class="field">
+                    <label for="metaType" data-i18n="metaType">Тип</label>
+                    <select id="metaType">
+                        <option value="front" data-i18n="metaFront">Переднє</option>
+                        <option value="rear" data-i18n="metaRear">Заднє</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="metaRim" data-i18n="metaRim">Обід</label>
+                    <input type="text" id="metaRim" placeholder="—">
+                </div>
+                <div class="field">
+                    <label for="metaHub" data-i18n="metaHub">Втулок</label>
+                    <input type="text" id="metaHub" placeholder="—">
+                </div>
+                <div class="field full">
+                    <label for="metaNotes" data-i18n="metaNotes">Нотатки</label>
+                    <textarea id="metaNotes" placeholder="—" rows="2"></textarea>
+                </div>
+                <div class="toolbar full">
+                    <button id="btnPrint" class="btn" data-i18n="btnPrint">Друк аркуша</button>
+                </div>
             </div>
         </section>
 
         <section class="right-col">
             <div class="panel chart-panel">
                 <div class="panel-head">
-                    <h2>Радарний графік натягу (кгс)</h2>
-                    <p class="hint">Пунктирні полігони — цільовий натяг кожної сторони.</p>
+                    <h2 data-i18n="chartTitle">Радарний графік натягу (кгс)</h2>
+                    <p class="hint" data-i18n="chartHint">Пунктирні полігони — цільовий натяг кожної сторони.</p>
                 </div>
                 <div class="chart-wrap">
                     <canvas id="tensionChart"></canvas>
@@ -90,19 +153,23 @@
 
             <div class="stats">
                 <div class="stat-card cyan-card">
-                    <h4>Статус: ліва сторона</h4>
+                    <h4 data-i18n="statusLeft">Статус: ліва сторона</h4>
                     <p class="stat-num" id="leftAvg">0 <span class="unit">кгс сер.</span></p>
                     <p class="stat-line neutral" id="leftStatus">Немає даних</p>
+                    <p class="stat-detail" id="leftDetail"></p>
                 </div>
                 <div class="stat-card emerald-card">
-                    <h4>Статус: права сторона</h4>
+                    <h4 data-i18n="statusRight">Статус: права сторона</h4>
                     <p class="stat-num" id="rightAvg">0 <span class="unit">кгс сер.</span></p>
                     <p class="stat-line neutral" id="rightStatus">Немає даних</p>
+                    <p class="stat-detail" id="rightDetail"></p>
                 </div>
             </div>
 
-            <p class="note">Покази автоматично зберігаються у браузері (localStorage). Таблиці калібрування — від виробників, інтерполяція лінійна, значення за межами шкали клампуються. Джерела даних — у README цього репозиторію.</p>
+            <p class="note" data-i18n="note">Покази автоматично зберігаються у браузері (localStorage). Таблиці калібрування — від виробників, інтерполяція лінійна, значення за межами шкали клампуються. Джерела даних — у README цього репозиторію.</p>
         </section>
     </main>
+
+    <div id="printSheet" class="print-sheet"></div>
 </body>
 </html>
