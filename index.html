@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpokeTension — налаштування колеса з тензометром</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js" defer></script>
+    <script src="js/data.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <h1 class="title">SpokeTension <span class="ver">v1.0</span></h1>
+        <div class="badge">ParkTool TM-1 · ZTTO TC-02</div>
+    </header>
+
+    <main class="layout">
+        <section class="panel">
+            <div class="panel-head">
+                <h2>Конфігурація колеса</h2>
+                <p class="hint">Виберіть тензометр, таблицю спиці та кількість спиць.</p>
+            </div>
+
+            <div class="field">
+                <label for="tensio">Тензометр</label>
+                <select id="tensio"></select>
+            </div>
+            <div class="field">
+                <label for="spokeType">Тип спиці (таблиця калібрування)</label>
+                <select id="spokeType"></select>
+            </div>
+            <div class="field">
+                <label for="spokeCount">Кількість спиць (усього)</label>
+                <select id="spokeCount">
+                    <option value="24">24 (12 ліва / 12 права)</option>
+                    <option value="28">28 (14 ліва / 14 права)</option>
+                    <option value="32" selected>32 (16 ліва / 16 права)</option>
+                    <option value="36">36 (18 ліва / 18 права)</option>
+                </select>
+            </div>
+
+            <div class="grid-targets">
+                <div class="field">
+                    <label for="targetL">Цільовий натяг, ліва (кгс)</label>
+                    <input type="number" id="targetL" value="90" min="0" step="5">
+                </div>
+                <div class="field">
+                    <label for="targetR">Цільовий натяг, права (кгс)</label>
+                    <input type="number" id="targetR" value="110" min="0" step="5">
+                </div>
+            </div>
+
+            <div class="panel-head">
+                <h2>Покази тензометра</h2>
+                <p class="hint">Одиниці показів: <span id="unitHintText">поділки шкали</span>. Вводьте показ для кожної спиці обох сторін колеса.</p>
+            </div>
+
+            <div class="inputs-scroll">
+                <div class="inputs-grid">
+                    <div>
+                        <h3 class="col-head cyan">Ліва сторона</h3>
+                        <div id="leftSpokesInputs" class="spoke-list"></div>
+                    </div>
+                    <div>
+                        <h3 class="col-head emerald">Права сторона</h3>
+                        <div id="rightSpokesInputs" class="spoke-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <button id="btnReset" class="btn ghost">Скинути</button>
+                <button id="btnExport" class="btn">Експорт JSON</button>
+                <button id="btnImport" class="btn">Імпорт JSON</button>
+                <input type="file" id="importFile" accept="application/json" hidden>
+            </div>
+        </section>
+
+        <section class="right-col">
+            <div class="panel chart-panel">
+                <div class="panel-head">
+                    <h2>Радарний графік натягу (кгс)</h2>
+                    <p class="hint">Пунктирні полігони — цільовий натяг кожної сторони.</p>
+                </div>
+                <div class="chart-wrap">
+                    <canvas id="tensionChart"></canvas>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card cyan-card">
+                    <h4>Статус: ліва сторона</h4>
+                    <p class="stat-num" id="leftAvg">0 <span class="unit">кгс сер.</span></p>
+                    <p class="stat-line neutral" id="leftStatus">Немає даних</p>
+                </div>
+                <div class="stat-card emerald-card">
+                    <h4>Статус: права сторона</h4>
+                    <p class="stat-num" id="rightAvg">0 <span class="unit">кгс сер.</span></p>
+                    <p class="stat-line neutral" id="rightStatus">Немає даних</p>
+                </div>
+            </div>
+
+            <p class="note">Покази автоматично зберігаються у браузері (localStorage). Таблиці калібрування — від виробників, інтерполяція лінійна, значення за межами шкали клампуються. Джерела даних — у README цього репозиторію.</p>
+        </section>
+    </main>
+</body>
+</html>
